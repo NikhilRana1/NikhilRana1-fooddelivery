@@ -1,33 +1,56 @@
-import React from 'react'
-import { MdFastfood } from "react-icons/md"; 
+import React, { useState } from "react";
+import { MdFastfood } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
 import { MdOutlineShoppingCart } from "react-icons/md";
+import { FaBars, FaTimes } from "react-icons/fa";
 
+function Nav({ cartCount = 0 }) {
+  const [menuOpen, setMenuOpen] = useState(false);
 
-
-
-function Nav() {
   return (
-    <div className='w-full h-[100px] flex justify-between items-center px-8 '>
-      <div className='w-[60px] h-[60px] bg-white flex justify-center items-center rounded-md shadow-xl '>
+    <nav className="navbar">
+      <div className="navbar-inner">
+        {/* Logo */}
+        <div className="nav-logo">
+          <div className="nav-logo-icon">
+            <MdFastfood size={24} color="white" />
+          </div>
+          <span className="nav-logo-text">Food<span>ie</span></span>
+        </div>
 
-        <MdFastfood className='w-[30px] h-[30px] text-green-500 ' />
+        {/* Search */}
+        <form className="nav-search">
+          <FaSearch color="#22c55e" size={16} />
+          <input type="text" placeholder="Search for food, restaurants..." />
+        </form>
 
+        {/* Right */}
+        <div className="nav-actions">
+          <button className="btn-signin">Sign In</button>
+          <button className="btn-order">Order Now</button>
+
+          <button className="nav-cart">
+            {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+            <MdOutlineShoppingCart size={22} color="#22c55e" />
+          </button>
+
+          <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+          </button>
+        </div>
       </div>
 
-      <form className='w-[55%] h-[60%] bg-white flex items-center px-5 gap-5 rounded-md shadow-md '>
-        <FaSearch className=' text-green-500 h-[20px] w-[20px]  ' />
-        <input type="text" placeholder='Search Items..' className='w-[100%] outline-none text-[20px]' />
-      </form>
-  
-      <div className='w-[60px] h-[60px] bg-white flex justify-center items-center rounded-md shadow-xl relative '>
-        <span className='absolute top-0 right-2 text-green-500 font-bold text-18px ' >0</span>
-        <MdOutlineShoppingCart className='w-[30px] h-[30px] text-green-500  ' />
-
-         
+      {/* Mobile Menu */}
+      <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
+        <div className="mobile-search">
+          <FaSearch color="#22c55e" size={14} />
+          <input type="text" placeholder="Search for food..." />
+        </div>
+        <button className="btn-signin" style={{ textAlign: "left" }}>Sign In</button>
+        <button className="btn-order" style={{ width: "100%" }}>Order Now</button>
       </div>
-    </div>
-  )
+    </nav>
+  );
 }
 
-export default Nav 
+export default Nav;

@@ -1,28 +1,27 @@
-import React from 'react'
-import Nav from '../Components/Nav'
-import Categories from '../Category'
+import React, { useState } from "react";
+import Nav from "../Components/Nav";
+import Hero from "../Components/Hero";
+import CategorySection from "../Components/CategorySection";
+import FoodMenu from "../Components/FoodMenu";
+import Footer from "../Components/Footer";
 
 function Home() {
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [cartCount, setCartCount] = useState(0);
+
+  const handleAddToCart = () => {
+    setCartCount((prev) => prev + 1);
+  };
+
   return (
-    <div className='bg-slate-200 w-full min-h-screen'>
-<Nav/>
-<div className='flex flex-wrap justify-center items-center gap-5 w-[100%] '>
-{Categories.map((item)=>{
-
-  return <div className='w-[140px] h-[150px] bg-white flex flex-col items-start gap-5 p-5 justify-start text-[20px]
-  font-semibold text-gray-600 rounded-lg shadow-xl hover:bg-green-200 cursor-pointer transition-all duration-200'>
-    {item.icon }
-    {item.name}
-    
+    <div className="bg-white w-full min-h-screen font-sans">
+      <Nav cartCount={cartCount} />
+      <Hero />
+      <CategorySection onSelect={setSelectedCategory} />
+      <FoodMenu selectedCategory={selectedCategory} onAddToCart={handleAddToCart} />
+      <Footer />
     </div>
-
-
- })}
-</div>
-</div>
-    
-    
-  )
+  );
 }
 
-export default Home
+export default Home;
